@@ -31,12 +31,28 @@ def d(days_from_today):
 # (agenda, monthly grid, legend) picks it up automatically.
 # ------------------------------------------------------------------
 PEOPLE_COLORS = {
-    "Justin": "#e3b341",   # gold
-    "Jessie": "#58a6ff",   # blue
-    "Darci":  "#f778ba",   # pink
-    "Mila":   "#a371f7",   # purple
-    "Family": "#3fb950",   # green — events for everybody
+    "Justin": "#d97706",   # amber (dark enough to read on white)
+    "Jessie": "#2563eb",   # blue
+    "Darci":  "#db2777",   # pink
+    "Mila":   "#7c3aed",   # purple
+    "Family": "#16a34a",   # green — events for everybody
 }
+
+# ------------------------------------------------------------------
+# HOME / WEATHER — lat & long for the forecast (Open-Meteo, free,
+# no API key). Change these if you move.
+# ------------------------------------------------------------------
+HOME_COORDS  = (38.386, -82.604)   # Catlettsburg, KY
+HOME_LABEL   = "Catlettsburg"
+
+# ------------------------------------------------------------------
+# COUNTDOWNS — shown top-right. date must be "YYYY-MM-DD".
+# Past dates are hidden automatically the next day.
+# ------------------------------------------------------------------
+COUNTDOWNS = [
+    {"date": "2026-10-31", "label": "Trunk or treat"},
+    {"date": "2027-01-09", "label": "Frozen Sasquatch 25k"},
+]
 
 # ------------------------------------------------------------------
 # CALENDAR EVENTS
@@ -96,9 +112,9 @@ DINNER_MENU = {
 # ------------------------------------------------------------------
 FAMILY_NAME     = "Bartram"
 REFRESH_MINUTES = 5                  # page reloads itself this often
-CHART_SYMBOL    = "NASDAQ:QQQ"       # chart symbol (see note below)
+CHART_SYMBOL    = "QQQ"              # sparkline symbol (Yahoo Finance)
 CHART_INTERVAL  = "60"               # 60-minute bars
-# NOTE: the free TradingView widget has no live CME futures data.
-# "CME_MINI:NQ1!" shows "invalid symbol". QQQ tracks the Nasdaq-100
-# (same index NQ futures follow) and works free. If you have a
-# TradingView account with CME data, try "CME_MINI:NQ1!" again.
+# NOTE: the chart is now a tiny static sparkline built at deploy time
+# from Yahoo Finance data — no JavaScript, so it renders on the old
+# Android frame (the TradingView widget didn't). QQQ = Nasdaq-100,
+# the index NQ futures track.

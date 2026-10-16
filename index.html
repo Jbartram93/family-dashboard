@@ -6,226 +6,132 @@
   <meta http-equiv="refresh" content="300">
   <title>Bartram Family Dashboard</title>
   <style>
-  /* Dark theme: near-black background, light text, big fonts so it
-     reads from across the room. */
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: #0d1117;
-    color: #e6edf3;
+    background: #f6f4ef;            /* warm off-white, not sterile white */
+    color: #1c1b18;
     font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
-    font-size: 20px;
-    padding: 24px 32px;
+    font-size: 19px;
+    padding: 26px 30px;
   }
+  b, th { font-variant-numeric: tabular-nums; }
 
-  h1 { font-size: 34px; letter-spacing: 1px; }
-  h1 .accent { color: #e3b341; }
-
-  .header {
-    display: flex; justify-content: space-between; align-items: baseline;
-    border-bottom: 1px solid #21262d; padding-bottom: 14px; margin-bottom: 22px;
-  }
-  .header .meta { color: #8b949e; font-size: 16px; }
-
-  /* The page is a grid: 2 columns, sections flow into slots. */
-  .grid {
-    display: grid;
-    grid-template-columns: 1.3fr 1fr;
-    gap: 22px;
-  }
-
+  .grid { display: grid; gap: 18px; }
   .card {
-    background: #161b22;
-    border: 1px solid #21262d;
-    border-radius: 12px;
-    padding: 20px;
+    background: #fff;
+    border: 1px solid #e9e6df;
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  }
+  h2 {
+    font-size: 13px; letter-spacing: 2px; color: #8f8a80;
+    text-transform: uppercase; margin-bottom: 10px; font-weight: 700;
   }
 
-  .card h2 {
-    font-size: 22px; text-transform: uppercase; letter-spacing: 2px;
-    color: #8b949e; margin-bottom: 14px;
-  }
+  /* ---------- HEADER ---------- */
+  .header { display: grid; grid-template-columns: 1.1fr 1.6fr 1fr; gap: 24px;
+    align-items: start; margin-bottom: 18px; }
+  .clock { font-size: 66px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+  .clock small { font-size: 34px; font-weight: 700; margin-left: 6px; }
+  .date-line { font-size: 21px; font-weight: 700; letter-spacing: 2px;
+    color: #6d6860; margin-top: 6px; }
+  .weather { border-left: 1px solid #e9e6df; padding-left: 24px; }
+  .wx-now { font-size: 44px; font-weight: 800; }
+  .wx-hours { display: flex; gap: 14px; margin: 6px 0; }
+  .wx-hour { font-size: 14px; color: #6d6860; line-height: 1.3; }
+  .wx-hour b { display: block; color: #1c1b18; }
+  .wx-hour span { color: #4a90d9; }
+  .wx-tag { font-style: italic; color: #6d6860; font-size: 16px; }
+  .countdowns { text-align: right; color: #6d6860; font-size: 15px; }
+  .cd b { font-size: 19px; color: #d97706; }
 
-  /* --- Agenda --- */
-  .day-heading {
-    color: #e3b341; font-weight: 700; font-size: 21px;
-    margin: 16px 0 8px;
-  }
-  .day-heading:first-child { margin-top: 0; }
+  /* ---------- HERO: NEXT UP ---------- */
+  .hero-row { grid-template-columns: 2.1fr 1fr 1fr; margin-bottom: 18px; }
+  .next-up { border-left: 8px solid #d97706; }
+  .nu-label { font-size: 13px; font-weight: 800; letter-spacing: 2px; }
+  .nu-title { font-size: 40px; font-weight: 800; letter-spacing: -.5px; margin: 4px 0; }
+  .nu-when { font-size: 24px; color: #6d6860; }
+  .nu-count { margin-left: 14px; background: #1c1b18; color: #fff;
+    padding: 3px 12px; border-radius: 999px; font-size: 17px; font-weight: 700; }
 
-  .event {
-    display: flex; gap: 14px; align-items: baseline;
-    background: #0d1117; border-left: 5px solid;  /* color set inline */
-    border-radius: 6px; padding: 10px 14px; margin-bottom: 8px;
-  }
-  .event-time   { color: #8b949e; min-width: 90px; font-variant-numeric: tabular-nums; }
-  .event-title  { flex: 1; }
-  .event-person { font-size: 15px; font-weight: 600; }
-
-  .legend { display: flex; gap: 18px; margin-bottom: 10px; font-size: 15px; }
-  .legend span::before {
-    content: ''; display: inline-block; width: 12px; height: 12px;
-    border-radius: 3px; margin-right: 6px; background: var(--c);
-  }
-
-  /* --- Month grid --- */
-  .month-title { font-size: 24px; font-weight: 700; margin-bottom: 10px; }
-  .month-grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
-  .month-grid th {
-    color: #8b949e; font-size: 14px; font-weight: 600;
-    padding: 6px 4px; text-align: left;
-  }
-  .month-cell {
-    vertical-align: top; height: 88px; padding: 4px;
-    border: 1px solid #21262d; font-size: 14px;
-  }
-  .month-cell.blank { background: #0d1117; }
-  .month-cell.today { background: #e3b34114; border: 1px solid #e3b341; }
-  .day-num { color: #8b949e; margin-bottom: 3px; }
-  .month-cell.today .day-num { color: #e3b341; font-weight: 700; }
-
-  .chip {
-    font-size: 12px; padding: 2px 5px; margin-bottom: 2px;
-    border-radius: 4px; white-space: nowrap; overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  /* --- Dinner menu --- */
-  .menu-row {
-    display: flex; gap: 16px; padding: 10px 12px; margin-bottom: 6px;
-    background: #0d1117; border-radius: 6px; border-left: 5px solid #30363d;
-  }
-  .menu-row.today-row { border-left-color: #3fb950; background: #3fb95014; }
-  .menu-day  { font-weight: 700; min-width: 48px; }
+  /* ---------- DINNER + SPARK ---------- */
+  .menu-row { display: flex; gap: 12px; padding: 5px 0; font-size: 16px; }
+  .menu-day { font-weight: 800; min-width: 44px; }
   .menu-meal { flex: 1; }
+  .today-row .menu-day, .today-row .menu-meal { color: #16a34a; font-weight: 700; }
 
-  /* --- Chart --- */
-  #tv_chart { height: 560px; margin: 0 -20px -20px; }  /* bleed to card edge */
+  .spark-head { display: flex; justify-content: space-between; font-size: 13px;
+    letter-spacing: 1px; font-weight: 700; color: #8f8a80; }
+  .spark-price { color: #1c1b18; letter-spacing: 0; }
+  .spark-price em { font-style: normal; }
+  .spark-price.up em { color: #16a34a; }
+  .spark-price.down em { color: #dc2626; }
+  .spark { width: 100%; height: 44px; margin-top: 8px; }
+  .spark-line { fill: none; stroke-width: 2.5; }
+  .spark-line.up { stroke: #16a34a; }
+  .spark-line.down { stroke: #dc2626; }
 
-  .footer { color: #484f58; font-size: 14px; margin-top: 18px; text-align: right; }
+  /* ---------- PERSON COLUMNS ---------- */
+  .people-row { grid-template-columns: repeat(4, 1fr); margin-bottom: 18px; }
+  .pc-head { font-size: 14px; font-weight: 800; letter-spacing: 2px;
+    border-bottom: 2px solid currentColor; padding-bottom: 6px; margin-bottom: 8px; }
+  .pc-row { font-size: 15px; padding: 4px 0; border-bottom: 1px solid #f0ede6; }
+  .pc-row b { display: inline-block; min-width: 46px; color: #6d6860; }
+  .pc-row span { margin-left: 8px; }
+  .pc-empty { color: #b5afa4; font-size: 15px; padding: 4px 0; }
+
+  /* ---------- MONTH ---------- */
+  .month-grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .month-grid th { font-size: 12px; color: #8f8a80; text-align: left; padding: 4px; }
+  .month-cell { vertical-align: top; height: 62px; padding: 4px;
+    border: 1px solid #f0ede6; font-size: 13px; color: #8f8a80; }
+  .month-cell.blank { background: #faf9f6; }
+  .month-cell.today { background: #d9770614; border: 2px solid #d97706;
+    color: #1c1b18; font-weight: 800; }
+  .chip { font-size: 12px; padding: 1px 5px; margin-top: 2px; border-radius: 4px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .footer { color: #b5afa4; font-size: 13px; margin-top: 14px; text-align: right; }
 </style>
 </head>
 <body>
 
   <div class="header">
-    <h1>Bartram <span class="accent">Family Dashboard</span></h1>
-    <div class="meta">Fri, Oct 16 &nbsp;·&nbsp; refreshes every 5 min</div>
+    <div>
+      <div class="clock">2:28<small>PM</small></div>
+      <div class="date-line">FRIDAY · OCTOBER 16</div>
+    </div>
+    <div class="weather">
+      <div class="wx-now">65°</div><div class="wx-hours"><div class="wx-hour"><b>2 PM</b>75°<span>1%</span></div><div class="wx-hour"><b>3 PM</b>76°<span>2%</span></div><div class="wx-hour"><b>4 PM</b>75°<span>8%</span></div><div class="wx-hour"><b>5 PM</b>69°<span>10%</span></div><div class="wx-hour"><b>6 PM</b>65°<span>8%</span></div><div class="wx-hour"><b>7 PM</b>64°<span>5%</span></div></div><div class="wx-tag">Clear skies — good day for it</div>
+    </div>
+    <div class="countdowns"><div class="cd"><b>15</b> days · Trunk or treat</div><div class="cd"><b>85</b> days · Frozen Sasquatch 25k</div></div>
   </div>
 
-  <div class="grid">
-    <div class="card" style="grid-row: span 2">
-      <h2>This Week</h2>
-      <div class="legend"><span style="--c:#e3b341">Justin</span><span style="--c:#58a6ff">Jessie</span><span style="--c:#f778ba">Darci</span><span style="--c:#a371f7">Mila</span><span style="--c:#3fb950">Family</span></div>
-      <div class="day-heading">Today — Fri, Oct 16</div>
-<div class="event" style="border-left-color:#e3b341"><span class="event-time">8:00 AM</span><span class="event-title">Safety walkthrough — floor 2</span><span class="event-person" style="color:#e3b341">Justin</span></div>
-<div class="event" style="border-left-color:#3fb950"><span class="event-time">4:30 PM</span><span class="event-title">Pick up car</span><span class="event-person" style="color:#3fb950">Family</span></div>
-<div class="event" style="border-left-color:#f778ba"><span class="event-time">5:30 PM</span><span class="event-title">Soccer practice</span><span class="event-person" style="color:#f778ba">Darci</span></div>
-<div class="event" style="border-left-color:#58a6ff"><span class="event-time">8:30 PM</span><span class="event-title">Book club</span><span class="event-person" style="color:#58a6ff">Jessie</span></div>
-<div class="day-heading">Tomorrow — Sat, Oct 17</div>
-<div class="event" style="border-left-color:#e3b341"><span class="event-time">7:30 AM</span><span class="event-title">Tempo run — 5 mi</span><span class="event-person" style="color:#e3b341">Justin</span></div>
-<div class="event" style="border-left-color:#a371f7"><span class="event-time">12:30 PM</span><span class="event-title">Pediatrician checkup</span><span class="event-person" style="color:#a371f7">Mila</span></div>
-<div class="event" style="border-left-color:#3fb950"><span class="event-time">6:30 PM</span><span class="event-title">Game night</span><span class="event-person" style="color:#3fb950">Family</span></div>
-<div class="day-heading">Sun, Oct 18</div>
-<div class="event" style="border-left-color:#58a6ff"><span class="event-time">9:00 AM</span><span class="event-title">Mila swim class</span><span class="event-person" style="color:#58a6ff">Jessie</span></div>
-<div class="event" style="border-left-color:#e3b341"><span class="event-time">6:00 PM</span><span class="event-title">Gym — push day</span><span class="event-person" style="color:#e3b341">Justin</span></div>
-<div class="day-heading">Mon, Oct 19</div>
-<div class="event" style="border-left-color:#e3b341"><span class="event-time">8:00 AM</span><span class="event-title">Work — EHS audit prep</span><span class="event-person" style="color:#e3b341">Justin</span></div>
-<div class="event" style="border-left-color:#f778ba"><span class="event-time">3:30 PM</span><span class="event-title">Art class</span><span class="event-person" style="color:#f778ba">Darci</span></div>
-<div class="event" style="border-left-color:#3fb950"><span class="event-time">7:00 PM</span><span class="event-title">Small group</span><span class="event-person" style="color:#3fb950">Family</span></div>
-<div class="day-heading">Tue, Oct 20</div>
-<div class="event" style="border-left-color:#58a6ff"><span class="event-time">10:00 AM</span><span class="event-title">Grocery run</span><span class="event-person" style="color:#58a6ff">Jessie</span></div>
-<div class="event" style="border-left-color:#e3b341"><span class="event-time">4:30 PM</span><span class="event-title">Pick up Darci</span><span class="event-person" style="color:#e3b341">Justin</span></div>
-<div class="day-heading">Wed, Oct 21</div>
-<div class="event" style="border-left-color:#e3b341"><span class="event-time">7:00 AM</span><span class="event-title">Long run — 10 mi</span><span class="event-person" style="color:#e3b341">Justin</span></div>
-<div class="event" style="border-left-color:#3fb950"><span class="event-time">9:00 AM</span><span class="event-title">Darci soccer game</span><span class="event-person" style="color:#3fb950">Family</span></div>
-<div class="event" style="border-left-color:#3fb950"><span class="event-time">6:00 PM</span><span class="event-title">Movie night</span><span class="event-person" style="color:#3fb950">Family</span></div>
-<div class="day-heading">Thu, Oct 22</div>
-<div class="event" style="border-left-color:#3fb950"><span class="event-time">10:00 AM</span><span class="event-title">Church</span><span class="event-person" style="color:#3fb950">Family</span></div>
-<div class="event" style="border-left-color:#3fb950"><span class="event-time">5:00 PM</span><span class="event-title">Meal prep for the week</span><span class="event-person" style="color:#3fb950">Family</span></div>
-    </div>
-
-    <div class="card">
-      <h2>Dinner This Week</h2>
-      <div class="menu-row"><span class="menu-day">Mon</span><span class="menu-meal">Chicken thighs, rice, broccoli</span></div>
-<div class="menu-row"><span class="menu-day">Tue</span><span class="menu-meal">Taco night</span></div>
-<div class="menu-row"><span class="menu-day">Wed</span><span class="menu-meal">Spaghetti & meatballs</span></div>
-<div class="menu-row"><span class="menu-day">Thu</span><span class="menu-meal">Breakfast for dinner</span></div>
-<div class="menu-row today-row"><span class="menu-day">Fri</span><span class="menu-meal">Homemade pizza night</span></div>
-<div class="menu-row"><span class="menu-day">Sat</span><span class="menu-meal">Grill out — burgers & corn</span></div>
-<div class="menu-row"><span class="menu-day">Sun</span><span class="menu-meal">Roast chicken & potatoes</span></div>
-    </div>
-
-    <div class="card">
-      <h2>NQ Futures · 1H</h2>
-      
-    <!-- Advanced Chart Widget: works with any symbol TradingView's
-         free tier serves. Crypto, stocks, and index symbols like
-         NQ/CME_MINI are paid-feed-only here, so this defaults to a
-         Nasdaq-100 proxy ETF. Change the symbol in data.py. -->
-    <iframe
-      src="https://www.tradingview-widget.com/embed-widget/advanced-chart/?locale=en&interval=60&theme=dark&timezone=America%2FNew_York&style=1&hide_side_toolbar=1&with_dateranges=0&allow_symbol_change=0&symbol=NASDAQ:QQQ"
-      style="width:100%;height:560px;border:none;margin:0 -20px -20px;"
-    ></iframe>
-    
-    </div>
+  <div class="grid hero-row">
+    <div class="card next-up"><div class="nu-label" style="color:#16a34a">NEXT UP · FAMILY</div><div class="nu-title">Pick up car</div><div class="nu-when">4:30 PM<span class="nu-count">IN 122 MIN</span></div></div>
+    <div class="card"><h2>Dinner</h2><div class="menu-row"><span class="menu-day">Mon</span><span class="menu-meal">Chicken thighs, rice, broccoli</span></div><div class="menu-row"><span class="menu-day">Tue</span><span class="menu-meal">Taco night</span></div><div class="menu-row"><span class="menu-day">Wed</span><span class="menu-meal">Spaghetti & meatballs</span></div><div class="menu-row"><span class="menu-day">Thu</span><span class="menu-meal">Breakfast for dinner</span></div><div class="menu-row today-row"><span class="menu-day">Fri</span><span class="menu-meal">Homemade pizza night</span></div><div class="menu-row"><span class="menu-day">Sat</span><span class="menu-meal">Grill out — burgers & corn</span></div><div class="menu-row"><span class="menu-day">Sun</span><span class="menu-meal">Roast chicken & potatoes</span></div></div>
+    <div class="card"><h2>Market</h2>
+        <div class="spark-head">
+          <span>NQ · QQQ · 1H</span>
+          <span class="spark-price down">710.45 <em>-5.4%</em></span>
+        </div>
+        <svg class="spark" viewBox="0 0 170 44" preserveAspectRatio="none">
+          <polyline class="spark-line down" points="3.0,5.4 10.1,3.7 17.3,3.6 24.4,3.0 31.5,11.6 38.7,14.0 45.8,18.5 52.9,20.0 60.0,20.1 67.2,19.6 74.3,19.9 81.4,29.9 88.6,24.8 95.7,26.8 102.8,24.8 110.0,25.6 117.1,20.9 124.2,20.8 131.3,29.5 138.5,33.2 145.6,33.5 152.7,38.5 159.9,41.0 167.0,41.0"/>
+        </svg></div>
   </div>
 
-  <div class="grid" style="margin-top: 22px">
-    <div class="card" style="grid-column: 1 / -1">
-      <h2>Month View</h2>
-      <div class="month-title">October 2026</div>
-<table class="month-grid">
-<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
-<tr>
-<td class="blank"></td>
-<td class="blank"></td>
-<td class="blank"></td>
-<td class="blank"></td>
-<td class="month-cell"><div class="day-num">1</div></td>
-<td class="month-cell"><div class="day-num">2</div></td>
-<td class="month-cell"><div class="day-num">3</div></td>
-</tr>
-<tr>
-<td class="month-cell"><div class="day-num">4</div></td>
-<td class="month-cell"><div class="day-num">5</div></td>
-<td class="month-cell"><div class="day-num">6</div></td>
-<td class="month-cell"><div class="day-num">7</div></td>
-<td class="month-cell"><div class="day-num">8</div></td>
-<td class="month-cell"><div class="day-num">9</div></td>
-<td class="month-cell"><div class="day-num">10</div></td>
-</tr>
-<tr>
-<td class="month-cell"><div class="day-num">11</div></td>
-<td class="month-cell"><div class="day-num">12</div></td>
-<td class="month-cell"><div class="day-num">13</div></td>
-<td class="month-cell"><div class="day-num">14</div></td>
-<td class="month-cell"><div class="day-num">15</div></td>
-<td class="month-cell today"><div class="day-num">16</div><div class="chip" style="background:#e3b34122;border-left:3px solid #e3b341">Safety walkthrou…</div><div class="chip" style="background:#3fb95022;border-left:3px solid #3fb950">Pick up car</div><div class="chip" style="background:#f778ba22;border-left:3px solid #f778ba">Soccer practice</div><div class="chip" style="background:#58a6ff22;border-left:3px solid #58a6ff">Book club</div></td>
-<td class="month-cell"><div class="day-num">17</div><div class="chip" style="background:#e3b34122;border-left:3px solid #e3b341">Tempo run — 5 mi</div><div class="chip" style="background:#a371f722;border-left:3px solid #a371f7">Pediatrician che…</div><div class="chip" style="background:#3fb95022;border-left:3px solid #3fb950">Game night</div></td>
-</tr>
-<tr>
-<td class="month-cell"><div class="day-num">18</div><div class="chip" style="background:#58a6ff22;border-left:3px solid #58a6ff">Mila swim class</div><div class="chip" style="background:#e3b34122;border-left:3px solid #e3b341">Gym — push day</div></td>
-<td class="month-cell"><div class="day-num">19</div><div class="chip" style="background:#e3b34122;border-left:3px solid #e3b341">Work — EHS audit…</div><div class="chip" style="background:#f778ba22;border-left:3px solid #f778ba">Art class</div><div class="chip" style="background:#3fb95022;border-left:3px solid #3fb950">Small group</div></td>
-<td class="month-cell"><div class="day-num">20</div><div class="chip" style="background:#58a6ff22;border-left:3px solid #58a6ff">Grocery run</div><div class="chip" style="background:#e3b34122;border-left:3px solid #e3b341">Pick up Darci</div></td>
-<td class="month-cell"><div class="day-num">21</div><div class="chip" style="background:#e3b34122;border-left:3px solid #e3b341">Long run — 10 mi</div><div class="chip" style="background:#3fb95022;border-left:3px solid #3fb950">Darci soccer gam…</div><div class="chip" style="background:#3fb95022;border-left:3px solid #3fb950">Movie night</div></td>
-<td class="month-cell"><div class="day-num">22</div><div class="chip" style="background:#3fb95022;border-left:3px solid #3fb950">Church</div><div class="chip" style="background:#3fb95022;border-left:3px solid #3fb950">Meal prep for th…</div></td>
-<td class="month-cell"><div class="day-num">23</div></td>
-<td class="month-cell"><div class="day-num">24</div></td>
-</tr>
-<tr>
-<td class="month-cell"><div class="day-num">25</div></td>
-<td class="month-cell"><div class="day-num">26</div></td>
-<td class="month-cell"><div class="day-num">27</div></td>
-<td class="month-cell"><div class="day-num">28</div></td>
-<td class="month-cell"><div class="day-num">29</div></td>
-<td class="month-cell"><div class="day-num">30</div></td>
-<td class="month-cell"><div class="day-num">31</div><div class="chip" style="background:#3fb95022;border-left:3px solid #3fb950">Trunk or treat @…</div></td>
-</tr>
-</table>
-    </div>
+  <div class="grid people-row">
+    <div class="pc"><div class="pc-head" style="color:#d97706">JUSTIN</div><div class="pc-row"><b>Today</b>8:00 AM<span>Safety walkthrough — floor 2</span></div><div class="pc-row"><b>Today</b>4:30 PM<span>Pick up car</span></div><div class="pc-row"><b>Sat</b>7:30 AM<span>Tempo run — 5 mi</span></div><div class="pc-row"><b>Sat</b>6:30 PM<span>Game night</span></div><div class="pc-row"><b>Sun</b>6:00 PM<span>Gym — push day</span></div><div class="pc-row"><b>Mon</b>8:00 AM<span>Work — EHS audit prep</span></div><div class="pc-row"><b>Mon</b>7:00 PM<span>Small group</span></div><div class="pc-row"><b>Tue</b>4:30 PM<span>Pick up Darci</span></div><div class="pc-row"><b>Wed</b>7:00 AM<span>Long run — 10 mi</span></div><div class="pc-row"><b>Wed</b>9:00 AM<span>Darci soccer game</span></div><div class="pc-row"><b>Wed</b>6:00 PM<span>Movie night</span></div><div class="pc-row"><b>Thu</b>10:00 AM<span>Church</span></div><div class="pc-row"><b>Thu</b>5:00 PM<span>Meal prep for the week</span></div></div><div class="pc"><div class="pc-head" style="color:#2563eb">JESSIE</div><div class="pc-row"><b>Today</b>4:30 PM<span>Pick up car</span></div><div class="pc-row"><b>Today</b>8:30 PM<span>Book club</span></div><div class="pc-row"><b>Sat</b>6:30 PM<span>Game night</span></div><div class="pc-row"><b>Sun</b>9:00 AM<span>Mila swim class</span></div><div class="pc-row"><b>Mon</b>7:00 PM<span>Small group</span></div><div class="pc-row"><b>Tue</b>10:00 AM<span>Grocery run</span></div><div class="pc-row"><b>Wed</b>9:00 AM<span>Darci soccer game</span></div><div class="pc-row"><b>Wed</b>6:00 PM<span>Movie night</span></div><div class="pc-row"><b>Thu</b>10:00 AM<span>Church</span></div><div class="pc-row"><b>Thu</b>5:00 PM<span>Meal prep for the week</span></div></div><div class="pc"><div class="pc-head" style="color:#db2777">DARCI</div><div class="pc-row"><b>Today</b>4:30 PM<span>Pick up car</span></div><div class="pc-row"><b>Today</b>5:30 PM<span>Soccer practice</span></div><div class="pc-row"><b>Sat</b>6:30 PM<span>Game night</span></div><div class="pc-row"><b>Mon</b>3:30 PM<span>Art class</span></div><div class="pc-row"><b>Mon</b>7:00 PM<span>Small group</span></div><div class="pc-row"><b>Wed</b>9:00 AM<span>Darci soccer game</span></div><div class="pc-row"><b>Wed</b>6:00 PM<span>Movie night</span></div><div class="pc-row"><b>Thu</b>10:00 AM<span>Church</span></div><div class="pc-row"><b>Thu</b>5:00 PM<span>Meal prep for the week</span></div></div><div class="pc"><div class="pc-head" style="color:#7c3aed">MILA</div><div class="pc-row"><b>Today</b>4:30 PM<span>Pick up car</span></div><div class="pc-row"><b>Sat</b>12:30 PM<span>Pediatrician checkup</span></div><div class="pc-row"><b>Sat</b>6:30 PM<span>Game night</span></div><div class="pc-row"><b>Mon</b>7:00 PM<span>Small group</span></div><div class="pc-row"><b>Wed</b>9:00 AM<span>Darci soccer game</span></div><div class="pc-row"><b>Wed</b>6:00 PM<span>Movie night</span></div><div class="pc-row"><b>Thu</b>10:00 AM<span>Church</span></div><div class="pc-row"><b>Thu</b>5:00 PM<span>Meal prep for the week</span></div></div>
   </div>
 
-  <div class="footer">generated 12:38 PM · edit data.py then re-run: python dashboard.py</div>
+  <div class="card">
+    <h2>October 2026</h2>
+    <table class="month-grid"><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="month-cell">1</td><td class="month-cell">2</td><td class="month-cell">3</td></tr><tr><td class="month-cell">4</td><td class="month-cell">5</td><td class="month-cell">6</td><td class="month-cell">7</td><td class="month-cell">8</td><td class="month-cell">9</td><td class="month-cell">10</td></tr><tr><td class="month-cell">11</td><td class="month-cell">12</td><td class="month-cell">13</td><td class="month-cell">14</td><td class="month-cell">15</td><td class="month-cell today">16<div class="chip" style="background:#d977061a;color:#d97706">Safety walkthrough</div><div class="chip" style="background:#16a34a1a;color:#16a34a">Pick up car</div><div class="chip" style="background:#db27771a;color:#db2777">Soccer practice</div><div class="chip" style="background:#2563eb1a;color:#2563eb">Book club</div></td><td class="month-cell">17<div class="chip" style="background:#d977061a;color:#d97706">Tempo run — 5 mi</div><div class="chip" style="background:#7c3aed1a;color:#7c3aed">Pediatrician check</div><div class="chip" style="background:#16a34a1a;color:#16a34a">Game night</div></td></tr><tr><td class="month-cell">18<div class="chip" style="background:#2563eb1a;color:#2563eb">Mila swim class</div><div class="chip" style="background:#d977061a;color:#d97706">Gym — push day</div></td><td class="month-cell">19<div class="chip" style="background:#d977061a;color:#d97706">Work — EHS audit p</div><div class="chip" style="background:#db27771a;color:#db2777">Art class</div><div class="chip" style="background:#16a34a1a;color:#16a34a">Small group</div></td><td class="month-cell">20<div class="chip" style="background:#2563eb1a;color:#2563eb">Grocery run</div><div class="chip" style="background:#d977061a;color:#d97706">Pick up Darci</div></td><td class="month-cell">21<div class="chip" style="background:#d977061a;color:#d97706">Long run — 10 mi</div><div class="chip" style="background:#16a34a1a;color:#16a34a">Darci soccer game</div><div class="chip" style="background:#16a34a1a;color:#16a34a">Movie night</div></td><td class="month-cell">22<div class="chip" style="background:#16a34a1a;color:#16a34a">Church</div><div class="chip" style="background:#16a34a1a;color:#16a34a">Meal prep for the </div></td><td class="month-cell">23</td><td class="month-cell">24</td></tr><tr><td class="month-cell">25</td><td class="month-cell">26</td><td class="month-cell">27</td><td class="month-cell">28</td><td class="month-cell">29</td><td class="month-cell">30</td><td class="month-cell">31<div class="chip" style="background:#16a34a1a;color:#16a34a">Trunk or treat @ c</div></td></tr></table>
+  </div>
+
+  <div class="footer">updates automatically · Catlettsburg</div>
 
 </body>
 </html>

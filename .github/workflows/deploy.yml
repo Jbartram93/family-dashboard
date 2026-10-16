@@ -11,6 +11,8 @@ name: Deploy dashboard to GitHub Pages
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: "*/30 * * * *"   # rebuild every 30 min: clock, countdowns, NEXT UP, weather
 
 permissions:
   contents: read
