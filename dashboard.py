@@ -343,12 +343,13 @@ def build_month():
 
 CSS = """
   /* THEME — change these few values to reskin the whole page.
-     Beige now; e.g. turquoise trial: --bg: #d7ebe6; --card: #f2faf7; */
+     Turquoise now; beige trial was: --bg: #e8dfcd; --card: #faf6ec;
+     --line: #d9cdb4; --faint: #e6dcc7; */
   :root {
-    --bg: #e8dfcd;        /* beige wall */
-    --card: #faf6ec;      /* cream cards */
-    --line: #d9cdb4;      /* tan borders */
-    --faint: #e6dcc7;     /* faint divider lines */
+    --bg: #d7ebe6;        /* pale turquoise wall */
+    --card: #f2faf7;      /* near-white mint cards */
+    --line: #9fcfc4;      /* seafoam borders */
+    --faint: #c5e5dd;     /* faint divider lines */
     --ink: #1c1b18;
     --muted: #6d6860;
   }
