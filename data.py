@@ -92,6 +92,9 @@ EVENTS = [
     {"date": d(6), "time": "10:00 AM", "person": "Family", "title": "Church"},
     {"date": d(6), "time": "5:00 PM",  "person": "Family", "title": "Meal prep for the week"},
 
+    # ---- NEXT WEEK ----
+    {"date": d(7), "time": "ALL DAY",  "person": "Family", "title": "Hungryroot"},
+
     # ---- FIXED DATES (hardcoded ISO dates work too) ----
     {"date": "2026-10-31", "time": "6:00 PM", "person": "Family", "title": "Trunk or treat @ church"},
 ]

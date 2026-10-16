@@ -58,8 +58,12 @@ def person_color(person):
 
 def time_sort_key(time_text):
     """'8:30 PM' -> time object so events sort chronologically
-    (text sorting would put '5:30 PM' before '8:00 AM')."""
-    return datetime.strptime(time_text, "%I:%M %p").time()
+    (text sorting would put '5:30 PM' before '8:00 AM').
+    Non-time labels like 'ALL DAY' sort to the start of the day."""
+    try:
+        return datetime.strptime(time_text, "%I:%M %p").time()
+    except ValueError:
+        return datetime.strptime("12:00 AM", "%I:%M %p").time()
 
 
 def event_datetime(event):
