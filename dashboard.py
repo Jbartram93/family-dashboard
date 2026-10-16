@@ -553,7 +553,7 @@ def build_page():
     {build_month()}
   </div>
 
-  <div class="footer">updates automatically · {HOME_LABEL}</div>
+  <div class="footer">build {NOW.strftime('%b %d, %I:%M %p')} ET · updates every 5 min · {HOME_LABEL}</div>
 
 </body>
 </html>"""
