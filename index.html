@@ -94,6 +94,20 @@
   .pc-row span { margin-left: 8px; }
   .pc-empty { color: #b5afa4; font-size: 15px; padding: 4px 0; }
 
+  /* ---------- TO-DO BOARD ---------- */
+  .todo { display: flex; align-items: center; gap: 10px; font-size: 15px;
+    padding: 6px 0; border-bottom: 1px solid var(--faint); cursor: pointer;
+    user-select: none; -webkit-user-select: none; }
+  .todo:last-child { border-bottom: none; }
+  .circle { width: 20px; height: 20px; border-radius: 50%;
+    border: 2.5px solid #b5afa4; flex-shrink: 0; position: relative;
+    transition: background .15s, border-color .15s; }
+  .todo.done .circle { background: #16a34a; border-color: #16a34a; }
+  .todo.done .circle::after { content: '\2713'; color: #fff; position: absolute;
+    inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; }
+  .todo.done { color: #b5afa4; text-decoration: line-through; }
+
   /* ---------- MONTH ---------- */
   .month-grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
   .month-grid th { font-size: 12px; color: #8f8a80; text-align: left; padding: 4px; }
@@ -112,7 +126,7 @@
 
   <div class="header">
     <div>
-      <div class="clock">6:37<small>PM</small></div>
+      <div class="clock">6:39<small>PM</small></div>
       <div class="date-line">FRIDAY · OCTOBER 16</div>
     </div>
     <div class="weather">
@@ -122,7 +136,7 @@
   </div>
 
   <div class="grid hero-row">
-    <div class="card next-up"><div class="nu-label" style="color:#2563eb">NEXT UP · JESSIE</div><div class="nu-title">Book club</div><div class="nu-when">8:30 PM<span class="nu-count">IN 113 MIN</span></div></div>
+    <div class="card next-up"><div class="nu-label" style="color:#2563eb">NEXT UP · JESSIE</div><div class="nu-title">Book club</div><div class="nu-when">8:30 PM<span class="nu-count">IN 111 MIN</span></div></div>
     <div class="card"><h2>Dinner</h2><div class="menu-row"><span class="menu-day">Mon</span><span class="menu-meal">Chicken thighs, rice, broccoli</span></div><div class="menu-row"><span class="menu-day">Tue</span><span class="menu-meal">Taco night</span></div><div class="menu-row"><span class="menu-day">Wed</span><span class="menu-meal">Spaghetti & meatballs</span></div><div class="menu-row"><span class="menu-day">Thu</span><span class="menu-meal">Breakfast for dinner</span></div><div class="menu-row today-row"><span class="menu-day">Fri</span><span class="menu-meal">Homemade pizza night</span></div><div class="menu-row"><span class="menu-day">Sat</span><span class="menu-meal">Grill out — burgers & corn</span></div><div class="menu-row"><span class="menu-day">Sun</span><span class="menu-meal">Roast chicken & potatoes</span></div></div>
     <div class="card"><h2>Market</h2>
         <div class="spark-head">
@@ -136,6 +150,23 @@
 
   <div class="grid people-row">
     <div class="pc"><div class="pc-head" style="color:#d97706">JUSTIN</div><div class="pc-row"><b>Today</b>8:00 AM<span>Safety walkthrough — floor 2</span></div><div class="pc-row"><b>Today</b>4:30 PM<span>Pick up car</span></div><div class="pc-row"><b>Sat</b>7:30 AM<span>Tempo run — 5 mi</span></div><div class="pc-row"><b>Sat</b>5:00 PM<span>Burgers at Kiefer's</span></div><div class="pc-row"><b>Sat</b>6:30 PM<span>Game night</span></div><div class="pc-row"><b>Sun</b>10:00 AM<span>Go to FLS?</span></div><div class="pc-row"><b>Sun</b>6:00 PM<span>Gym — push day</span></div><div class="pc-row"><b>Mon</b>8:00 AM<span>Work — EHS audit prep</span></div><div class="pc-row"><b>Mon</b>7:00 PM<span>Small group</span></div><div class="pc-row"><b>Tue</b>4:30 PM<span>Pick up Darci</span></div><div class="pc-row"><b>Wed</b>7:00 AM<span>Long run — 10 mi</span></div><div class="pc-row"><b>Wed</b>9:00 AM<span>Darci soccer game</span></div><div class="pc-row"><b>Wed</b>6:00 PM<span>Movie night</span></div><div class="pc-row"><b>Thu</b>10:00 AM<span>Church</span></div><div class="pc-row"><b>Thu</b>5:00 PM<span>Meal prep for the week</span></div></div><div class="pc"><div class="pc-head" style="color:#2563eb">JESSIE</div><div class="pc-row"><b>Today</b>4:30 PM<span>Pick up car</span></div><div class="pc-row"><b>Today</b>8:30 PM<span>Book club</span></div><div class="pc-row"><b>Sat</b>5:00 PM<span>Burgers at Kiefer's</span></div><div class="pc-row"><b>Sat</b>6:30 PM<span>Game night</span></div><div class="pc-row"><b>Sun</b>9:00 AM<span>Mila swim class</span></div><div class="pc-row"><b>Mon</b>7:00 PM<span>Small group</span></div><div class="pc-row"><b>Tue</b>10:00 AM<span>Grocery run</span></div><div class="pc-row"><b>Wed</b>9:00 AM<span>Darci soccer game</span></div><div class="pc-row"><b>Wed</b>6:00 PM<span>Movie night</span></div><div class="pc-row"><b>Thu</b>10:00 AM<span>Church</span></div><div class="pc-row"><b>Thu</b>5:00 PM<span>Meal prep for the week</span></div></div><div class="pc"><div class="pc-head" style="color:#db2777">DARCI</div><div class="pc-row"><b>Today</b>4:30 PM<span>Pick up car</span></div><div class="pc-row"><b>Today</b>5:30 PM<span>Soccer practice</span></div><div class="pc-row"><b>Sat</b>5:00 PM<span>Burgers at Kiefer's</span></div><div class="pc-row"><b>Sat</b>6:30 PM<span>Game night</span></div><div class="pc-row"><b>Mon</b>7:00 PM<span>Small group</span></div><div class="pc-row"><b>Tue</b>12:00 PM<span>Art class</span></div><div class="pc-row"><b>Wed</b>9:00 AM<span>Darci soccer game</span></div><div class="pc-row"><b>Wed</b>6:00 PM<span>Movie night</span></div><div class="pc-row"><b>Thu</b>10:00 AM<span>Church</span></div><div class="pc-row"><b>Thu</b>5:00 PM<span>Meal prep for the week</span></div></div><div class="pc"><div class="pc-head" style="color:#7c3aed">MILA</div><div class="pc-row"><b>Today</b>4:30 PM<span>Pick up car</span></div><div class="pc-row"><b>Sat</b>12:30 PM<span>Pediatrician checkup</span></div><div class="pc-row"><b>Sat</b>5:00 PM<span>Burgers at Kiefer's</span></div><div class="pc-row"><b>Sat</b>6:30 PM<span>Game night</span></div><div class="pc-row"><b>Mon</b>7:00 PM<span>Small group</span></div><div class="pc-row"><b>Wed</b>9:00 AM<span>Darci soccer game</span></div><div class="pc-row"><b>Wed</b>6:00 PM<span>Movie night</span></div><div class="pc-row"><b>Thu</b>10:00 AM<span>Church</span></div><div class="pc-row"><b>Thu</b>5:00 PM<span>Meal prep for the week</span></div></div>
+  </div>
+
+  <div class="grid people-row">
+    <div class="pc todo-col"><div class="pc-head" style="color:#d97706">JUSTIN</div><div class="todo" data-key="todo/2026-10-16/Justin/0"><span class="circle"></span>Tempo run</div><div class="todo" data-key="todo/2026-10-16/Justin/1"><span class="circle"></span>Push day lifts</div><div class="todo" data-key="todo/2026-10-16/Justin/2"><span class="circle"></span>10 min stretch</div></div><div class="pc todo-col"><div class="pc-head" style="color:#2563eb">JESSIE</div><div class="todo" data-key="todo/2026-10-16/Jessie/0"><span class="circle"></span>Laundry</div><div class="todo" data-key="todo/2026-10-16/Jessie/1"><span class="circle"></span>Tidy kitchen</div><div class="todo" data-key="todo/2026-10-16/Jessie/2"><span class="circle"></span>Water plants</div></div><div class="pc todo-col"><div class="pc-head" style="color:#db2777">DARCI</div><div class="todo" data-key="todo/2026-10-16/Darci/0"><span class="circle"></span>Make bed</div><div class="todo" data-key="todo/2026-10-16/Darci/1"><span class="circle"></span>20 min reading</div><div class="todo" data-key="todo/2026-10-16/Darci/2"><span class="circle"></span>Brush teeth</div></div><div class="pc todo-col"><div class="pc-head" style="color:#7c3aed">MILA</div><div class="todo" data-key="todo/2026-10-16/Mila/0"><span class="circle"></span>Tummy time</div></div>
+<script>
+(function(){
+  var boxes = document.querySelectorAll('.todo');
+  boxes.forEach(function(el){
+    var key = el.getAttribute('data-key');
+    if (localStorage.getItem(key) === '1') el.classList.add('done');
+    el.addEventListener('click', function(){
+      var on = el.classList.toggle('done');
+      localStorage.setItem(key, on ? '1' : '0');
+    });
+  });
+})();
+</script>
   </div>
 
   <div class="card">

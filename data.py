@@ -46,6 +46,19 @@ HOME_COORDS  = (38.386, -82.604)   # Catlettsburg, KY
 HOME_LABEL   = "Catlettsburg"
 
 # ------------------------------------------------------------------
+# DAILY TO-DOS — one list per person. Checked circles reset every
+# night automatically (daily chore board). Clicks are saved on the
+# frame itself (browser storage), so they survive the 5-min refresh
+# but not a different device — the frame is the family surface.
+# ------------------------------------------------------------------
+TODOS = {
+    "Justin": ["Tempo run", "Push day lifts", "10 min stretch"],
+    "Jessie": ["Laundry", "Tidy kitchen", "Water plants"],
+    "Darci":  ["Make bed", "20 min reading", "Brush teeth"],
+    "Mila":   ["Tummy time"],
+}
+
+# ------------------------------------------------------------------
 # COUNTDOWNS — shown top-right. date must be "YYYY-MM-DD".
 # Past dates are hidden automatically the next day.
 # ------------------------------------------------------------------

@@ -24,7 +24,7 @@ import urllib.request
 from datetime import datetime, timedelta
 
 from data import (
-    PEOPLE_COLORS, EVENTS, DINNER_MENU, COUNTDOWNS,
+    PEOPLE_COLORS, EVENTS, DINNER_MENU, COUNTDOWNS, TODOS,
     HOME_COORDS, HOME_LABEL,
     FAMILY_NAME, REFRESH_MINUTES, CHART_SYMBOL, CHART_INTERVAL,
 )
@@ -269,8 +269,51 @@ def build_person_columns():
 
 
 # ==================================================================
-# SECTION: COUNTDOWNS (top-right corner)
+# SECTION: TO-DO BOARD (one column per person, clickable circles)
 # ==================================================================
+
+def build_todos():
+    """Circles the family can tap on the frame. Two moving parts:
+    HTML: <div class="todo" data-key="..."> — one per item.
+    JS:   one small script (the ONLY JavaScript on the page) that
+          toggles a 'done' class and saves state to localStorage,
+          namespaced per person+item+date so it auto-resets daily.
+    """
+    cols = []
+    for person, items in TODOS.items():
+        color = person_color(person)
+        rows = []
+        for idx, item in enumerate(items):
+            # data-key embeds the date so localStorage entries expire
+            # naturally when the day changes — no reset logic needed.
+            rows.append(
+                f'<div class="todo" data-key="todo/{TODAY.isoformat()}/{person}/{idx}">'
+                f'<span class="circle"></span>{item}</div>'
+            )
+        cols.append(
+            f'<div class="pc todo-col"><div class="pc-head" '
+            f'style="color:{color}">{person.upper()}</div>{"".join(rows)}</div>'
+        )
+    board = "".join(cols)
+
+    # The page's only script: click -> toggle checkmark -> persist.
+    # localStorage has no expiry, so the date inside the key IS the
+    # reset mechanism. Old days' entries are just ignored and overwritten.
+    script = """
+<script>
+(function(){
+  var boxes = document.querySelectorAll('.todo');
+  boxes.forEach(function(el){
+    var key = el.getAttribute('data-key');
+    if (localStorage.getItem(key) === '1') el.classList.add('done');
+    el.addEventListener('click', function(){
+      var on = el.classList.toggle('done');
+      localStorage.setItem(key, on ? '1' : '0');
+    });
+  });
+})();
+</script>"""
+    return board + script
 
 def build_countdowns():
     items = []
@@ -434,6 +477,20 @@ CSS = """
   .pc-row span { margin-left: 8px; }
   .pc-empty { color: #b5afa4; font-size: 15px; padding: 4px 0; }
 
+  /* ---------- TO-DO BOARD ---------- */
+  .todo { display: flex; align-items: center; gap: 10px; font-size: 15px;
+    padding: 6px 0; border-bottom: 1px solid var(--faint); cursor: pointer;
+    user-select: none; -webkit-user-select: none; }
+  .todo:last-child { border-bottom: none; }
+  .circle { width: 20px; height: 20px; border-radius: 50%;
+    border: 2.5px solid #b5afa4; flex-shrink: 0; position: relative;
+    transition: background .15s, border-color .15s; }
+  .todo.done .circle { background: #16a34a; border-color: #16a34a; }
+  .todo.done .circle::after { content: '\\2713'; color: #fff; position: absolute;
+    inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; }
+  .todo.done { color: #b5afa4; text-decoration: line-through; }
+
   /* ---------- MONTH ---------- */
   .month-grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
   .month-grid th { font-size: 12px; color: #8f8a80; text-align: left; padding: 4px; }
@@ -485,6 +542,10 @@ def build_page():
 
   <div class="grid people-row">
     {build_person_columns()}
+  </div>
+
+  <div class="grid people-row">
+    {build_todos()}
   </div>
 
   <div class="card">
