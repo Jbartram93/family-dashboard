@@ -74,6 +74,7 @@ EVENTS = [
 
     # ---- REST OF THE WEEK ----
     {"date": d(2), "time": "9:00 AM",  "person": "Jessie", "title": "Mila swim class"},
+    {"date": d(2), "time": "10:00 AM", "person": "Justin", "title": "Go to FLS?"},
     {"date": d(2), "time": "6:00 PM",  "person": "Justin", "title": "Gym — push day"},
 
     {"date": d(3), "time": "8:00 AM",  "person": "Justin", "title": "Work — EHS audit prep"},
