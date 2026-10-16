@@ -342,11 +342,22 @@ def build_month():
 # ==================================================================
 
 CSS = """
+  /* THEME — change these few values to reskin the whole page.
+     Beige now; e.g. turquoise trial: --bg: #d7ebe6; --card: #f2faf7; */
+  :root {
+    --bg: #e8dfcd;        /* beige wall */
+    --card: #faf6ec;      /* cream cards */
+    --line: #d9cdb4;      /* tan borders */
+    --faint: #e6dcc7;     /* faint divider lines */
+    --ink: #1c1b18;
+    --muted: #6d6860;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: #f6f4ef;            /* warm off-white, not sterile white */
-    color: #1c1b18;
+    background: var(--bg);
+    color: var(--ink);
     font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
     font-size: 19px;
     padding: 26px 30px;
@@ -355,11 +366,11 @@ CSS = """
 
   .grid { display: grid; gap: 18px; }
   .card {
-    background: #fff;
-    border: 1px solid #e9e6df;
+    background: var(--card);
+    border: 1px solid var(--line);
     border-radius: 14px;
     padding: 18px 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
   }
   h2 {
     font-size: 13px; letter-spacing: 2px; color: #8f8a80;
@@ -373,7 +384,7 @@ CSS = """
   .clock small { font-size: 34px; font-weight: 700; margin-left: 6px; }
   .date-line { font-size: 21px; font-weight: 700; letter-spacing: 2px;
     color: #6d6860; margin-top: 6px; }
-  .weather { border-left: 1px solid #e9e6df; padding-left: 24px; }
+  .weather { border-left: 1px solid var(--line); padding-left: 24px; }
   .wx-now { font-size: 44px; font-weight: 800; }
   .wx-hours { display: flex; gap: 14px; margin: 6px 0; }
   .wx-hour { font-size: 14px; color: #6d6860; line-height: 1.3; }
@@ -413,7 +424,7 @@ CSS = """
   .people-row { grid-template-columns: repeat(4, 1fr); margin-bottom: 18px; }
   .pc-head { font-size: 14px; font-weight: 800; letter-spacing: 2px;
     border-bottom: 2px solid currentColor; padding-bottom: 6px; margin-bottom: 8px; }
-  .pc-row { font-size: 15px; padding: 4px 0; border-bottom: 1px solid #f0ede6; }
+  .pc-row { font-size: 15px; padding: 4px 0; border-bottom: 1px solid var(--faint); }
   .pc-row b { display: inline-block; min-width: 46px; color: #6d6860; }
   .pc-row span { margin-left: 8px; }
   .pc-empty { color: #b5afa4; font-size: 15px; padding: 4px 0; }
@@ -422,8 +433,8 @@ CSS = """
   .month-grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
   .month-grid th { font-size: 12px; color: #8f8a80; text-align: left; padding: 4px; }
   .month-cell { vertical-align: top; height: 62px; padding: 4px;
-    border: 1px solid #f0ede6; font-size: 13px; color: #8f8a80; }
-  .month-cell.blank { background: #faf9f6; }
+    border: 1px solid var(--faint); font-size: 13px; color: #8f8a80; }
+  .month-cell.blank { background: var(--bg); }
   .month-cell.today { background: #d9770614; border: 2px solid #d97706;
     color: #1c1b18; font-weight: 800; }
   .chip { font-size: 12px; padding: 1px 5px; margin-top: 2px; border-radius: 4px;
