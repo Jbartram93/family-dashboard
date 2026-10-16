@@ -46,6 +46,7 @@ PEOPLE_COLORS = {
 EVENTS = [
     # ---- TODAY ----
     {"date": d(0), "time": "8:00 AM",  "person": "Justin", "title": "Safety walkthrough — floor 2"},
+    {"date": d(0), "time": "4:30 PM",  "person": "Family", "title": "Pick up car"},
     {"date": d(0), "time": "5:30 PM",  "person": "Darci",  "title": "Soccer practice"},
     {"date": d(0), "time": "8:30 PM",  "person": "Jessie", "title": "Book club"},
 
