@@ -77,10 +77,10 @@ EVENTS = [
     {"date": d(2), "time": "6:00 PM",  "person": "Justin", "title": "Gym — push day"},
 
     {"date": d(3), "time": "8:00 AM",  "person": "Justin", "title": "Work — EHS audit prep"},
-    {"date": d(3), "time": "3:30 PM",  "person": "Darci",  "title": "Art class"},
     {"date": d(3), "time": "7:00 PM",  "person": "Family", "title": "Small group"},
 
     {"date": d(4), "time": "10:00 AM", "person": "Jessie", "title": "Grocery run"},
+    {"date": d(4), "time": "12:00 PM", "person": "Darci",  "title": "Art class"},
     {"date": d(4), "time": "4:30 PM",  "person": "Justin", "title": "Pick up Darci"},
 
     # ---- WEEKEND ----
