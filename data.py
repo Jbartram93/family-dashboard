@@ -67,7 +67,7 @@ EVENTS = [
     {"date": d(0), "time": "8:30 PM",  "person": "Jessie", "title": "Book club"},
 
     # ---- TOMORROW ----
-    {"date": d(1), "time": "5:00 PM",  "person": "Family", "title": "Burgers at Kiefer"},
+    {"date": d(1), "time": "5:00 PM",  "person": "Family", "title": "Burgers at Kiefer's"},
     {"date": d(1), "time": "7:30 AM",  "person": "Justin", "title": "Tempo run — 5 mi"},
     {"date": d(1), "time": "12:30 PM", "person": "Mila",   "title": "Pediatrician checkup"},
     {"date": d(1), "time": "6:30 PM",  "person": "Family", "title": "Game night"},
