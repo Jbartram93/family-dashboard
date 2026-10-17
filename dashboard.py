@@ -299,9 +299,23 @@ def build_todos():
     # The page's only script: click -> toggle checkmark -> persist.
     # localStorage has no expiry, so the date inside the key IS the
     # reset mechanism. Old days' entries are just ignored and overwritten.
+    # Also runs the LIVE CLOCK — ticks on the device using its own clock
+    # (build time is the no-JS fallback; this corrects it every second).
     script = """
 <script>
 (function(){
+  function tickClock(){
+    var el = document.getElementById('live-clock');
+    if (!el) return;
+    var now = new Date();
+    var h = now.getHours(), m = now.getMinutes();
+    var ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    el.innerHTML = h + ':' + (m < 10 ? '0' : '') + m + '<small>' + ampm + '</small>';
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
   var boxes = document.querySelectorAll('.todo');
   boxes.forEach(function(el){
     var key = el.getAttribute('data-key');
@@ -531,7 +545,7 @@ def build_page():
 
   <div class="header">
     <div>
-      <div class="clock">{NOW.strftime('%I:%M').lstrip('0')}<small>{NOW.strftime('%p')}</small></div>
+      <div class="clock"><span id="live-clock">{NOW.strftime('%I:%M').lstrip('0')}<small>{NOW.strftime('%p')}</small></span></div>
       <div class="date-line">{date_line}</div>
     </div>
     <div class="weather">
