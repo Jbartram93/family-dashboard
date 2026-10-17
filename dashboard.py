@@ -390,13 +390,13 @@ def build_month():
 
 CSS = """
   /* THEME — change these few values to reskin the whole page.
-     Turquoise now; beige trial was: --bg: #e8dfcd; --card: #faf6ec;
+     Deep turquoise now; beige trial was: --bg: #e8dfcd; --card: #faf6ec;
      --line: #d9cdb4; --faint: #e6dcc7; */
   :root {
-    --bg: #d7ebe6;        /* pale turquoise wall */
-    --card: #f2faf7;      /* near-white mint cards */
-    --line: #9fcfc4;      /* seafoam borders */
-    --faint: #c5e5dd;     /* faint divider lines */
+    --bg: #2e8f83;        /* deep turquoise wall */
+    --card: #f0faf6;      /* pale mint cards */
+    --line: #6fbfae;      /* seafoam borders */
+    --faint: #c9e8e0;     /* faint divider lines */
     --ink: #1c1b18;
     --muted: #6d6860;
   }
@@ -411,6 +411,12 @@ CSS = """
     padding: 26px 30px;
   }
   b, th { font-variant-numeric: tabular-nums; }
+
+  /* Header sits directly on the turquoise wall -> white text for contrast */
+  .clock, .wx-now, .wx-hour b { color: #ffffff; }
+  .date-line, .wx-tag, .countdowns, .footer { color: #d5f0ea; }
+  .wx-hour { color: #bfe3da; }
+  .cd b { color: #ffd166; }
 
   .grid { display: grid; gap: 18px; }
   .card {
