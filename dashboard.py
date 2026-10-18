@@ -403,23 +403,15 @@ def build_month():
 # ==================================================================
 
 CSS = """
-  /* THEME — change these few values to reskin the whole page.
-     Deep turquoise now; beige trial was: --bg: #e8dfcd; --card: #faf6ec;
-     --line: #d9cdb4; --faint: #e6dcc7; */
-  :root {
-    --bg: #2e8f83;        /* deep turquoise wall */
-    --card: #f0faf6;      /* pale mint cards */
-    --line: #6fbfae;      /* seafoam borders */
-    --faint: #c9e8e0;     /* faint divider lines */
-    --ink: #1c1b18;
-    --muted: #6d6860;
-  }
-
+  /* THEME — 2015-browser compatible (no CSS variables, no grid).
+     The frame's WebView 44 drops var() and grid, so everything is
+     hardcoded here. Change colors in ALL the marked spots.
+     Deep turquoise theme: bg #2e8f83, cards #f0faf6, lines #6fbfae. */
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: var(--bg);
-    color: var(--ink);
+    background: #2e8f83;   /* THEME: turquoise wall */
+    color: #1c1b18;
     font-family: -apple-system, 'Segoe UI', Roboto, sans-serif;
     font-size: 19px;
     padding: 26px 30px;
@@ -432,30 +424,40 @@ CSS = """
   .wx-hour { color: #bfe3da; }
   .cd b { color: #ffd166; }
 
-  .grid { display: grid; gap: 18px; }
+  .grid { display: flex; }  /* old-WebView "grid": flex row, widths below */
+  .grid > div { margin-right: 16px; }
+  .grid > div:last-child { margin-right: 0; }
+  /* hero row: NEXT UP wide, dinner + market split the rest */
+  .hero-row > div:nth-child(1) { width: 51%; }
+  .hero-row > div:nth-child(2), .hero-row > div:nth-child(3) { width: 24.5%; }
+  /* person + todo columns: 4 equal columns */
+  .people-row > div { flex: 1; min-width: 0; }
   .card {
-    background: var(--card);
-    border: 1px solid var(--line);
+    background: #f0faf6;   /* THEME: pale mint card */
+    border: 1px solid #6fbfae;
     border-radius: 14px;
     padding: 18px 20px;
     box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    margin-bottom: 18px;
   }
   h2 {
     font-size: 13px; letter-spacing: 2px; color: #8f8a80;
     text-transform: uppercase; margin-bottom: 10px; font-weight: 700;
   }
 
-  /* ---------- HEADER ---------- */
-  .header { display: grid; grid-template-columns: 1.1fr 1.6fr 1fr; gap: 24px;
-    align-items: start; margin-bottom: 18px; }
+  /* ---------- HEADER (flexbox, stacks on narrow screens) ---------- */
+  .header { display: flex; align-items: flex-start; margin-bottom: 18px; }
+  .header > div:nth-child(1) { width: 30%; min-width: 220px; }
+  .header > div:nth-child(2) { width: 45%; }
+  .header > div:nth-child(3) { width: 25%; }
   .clock { font-size: 66px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
   .clock small { font-size: 34px; font-weight: 700; margin-left: 6px; }
   .date-line { font-size: 21px; font-weight: 700; letter-spacing: 2px;
     color: #6d6860; margin-top: 6px; }
-  .weather { border-left: 1px solid var(--line); padding-left: 24px; }
+  .weather { border-left: 1px solid #6fbfae; padding-left: 24px; }
   .wx-now { font-size: 44px; font-weight: 800; }
-  .wx-hours { display: flex; gap: 14px; margin: 6px 0; }
-  .wx-hour { font-size: 14px; color: #6d6860; line-height: 1.3; }
+  .wx-hours { display: flex; margin: 6px 0; }
+  .wx-hour { font-size: 14px; color: #6d6860; line-height: 1.3; margin-right: 14px; }
   .wx-hour b { display: block; color: #1c1b18; }
   .wx-hour span { color: #4a90d9; }
   .wx-tag { font-style: italic; color: #6d6860; font-size: 16px; }
@@ -463,7 +465,6 @@ CSS = """
   .cd b { font-size: 19px; color: #d97706; }
 
   /* ---------- HERO: NEXT UP ---------- */
-  .hero-row { grid-template-columns: 2.1fr 1fr 1fr; margin-bottom: 18px; }
   .next-up { border-left: 8px solid #d97706; }
   .nu-label { font-size: 13px; font-weight: 800; letter-spacing: 2px; }
   .nu-title { font-size: 40px; font-weight: 800; letter-spacing: -.5px; margin: 4px 0; }
@@ -472,8 +473,8 @@ CSS = """
     padding: 3px 12px; border-radius: 999px; font-size: 17px; font-weight: 700; }
 
   /* ---------- DINNER + SPARK ---------- */
-  .menu-row { display: flex; gap: 12px; padding: 5px 0; font-size: 16px; }
-  .menu-day { font-weight: 800; min-width: 44px; }
+  .menu-row { display: flex; padding: 5px 0; font-size: 16px; }
+  .menu-day { font-weight: 800; min-width: 44px; margin-right: 12px; }
   .menu-meal { flex: 1; }
   .today-row .menu-day, .today-row .menu-meal { color: #16a34a; font-weight: 700; }
 
@@ -488,18 +489,17 @@ CSS = """
   .spark-line.up { stroke: #16a34a; }
   .spark-line.down { stroke: #dc2626; }
 
-  /* ---------- PERSON COLUMNS ---------- */
-  .people-row { grid-template-columns: repeat(4, 1fr); margin-bottom: 18px; }
+  /* ---------- PERSON COLUMNS (4-across via inline-block+flex fallback) ---------- */
   .pc-head { font-size: 14px; font-weight: 800; letter-spacing: 2px;
     border-bottom: 2px solid currentColor; padding-bottom: 6px; margin-bottom: 8px; }
-  .pc-row { font-size: 15px; padding: 4px 0; border-bottom: 1px solid var(--faint); }
+  .pc-row { font-size: 15px; padding: 4px 0; border-bottom: 1px solid #c9e8e0; }
   .pc-row b { display: inline-block; min-width: 46px; color: #6d6860; }
   .pc-row span { margin-left: 8px; }
   .pc-empty { color: #b5afa4; font-size: 15px; padding: 4px 0; }
 
   /* ---------- TO-DO BOARD ---------- */
-  .todo { display: flex; align-items: center; gap: 10px; font-size: 15px;
-    padding: 6px 0; border-bottom: 1px solid var(--faint); cursor: pointer;
+  .todo { display: flex; align-items: center; font-size: 15px;
+    padding: 6px 0; border-bottom: 1px solid #c9e8e0; cursor: pointer;
     user-select: none; -webkit-user-select: none; }
   .todo:last-child { border-bottom: none; }
   .circle { width: 20px; height: 20px; border-radius: 50%;
@@ -507,7 +507,7 @@ CSS = """
     transition: background .15s, border-color .15s; }
   .todo.done .circle { background: #16a34a; border-color: #16a34a; }
   .todo.done .circle::after { content: '\\2713'; color: #fff; position: absolute;
-    inset: 0; display: flex; align-items: center; justify-content: center;
+    left: 0; top: 0; bottom: 0; right: 0; display: flex; align-items: center; justify-content: center;
     font-size: 13px; font-weight: 800; }
   .todo.done { color: #b5afa4; text-decoration: line-through; }
 
@@ -515,14 +515,14 @@ CSS = """
   .month-grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
   .month-grid th { font-size: 12px; color: #8f8a80; text-align: left; padding: 4px; }
   .month-cell { vertical-align: top; height: 62px; padding: 4px;
-    border: 1px solid var(--faint); font-size: 13px; color: #8f8a80; }
-  .month-cell.blank { background: var(--bg); }
+    border: 1px solid #c9e8e0; font-size: 13px; color: #8f8a80; }
+  .month-cell.blank { background: #2e8f83; }
   .month-cell.today { background: #d9770614; border: 2px solid #d97706;
     color: #1c1b18; font-weight: 800; }
   .chip { font-size: 12px; padding: 1px 5px; margin-top: 2px; border-radius: 4px;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-  .footer { color: #b5afa4; font-size: 13px; margin-top: 14px; text-align: right; }
+  .footer { color: #d5f0ea; font-size: 13px; margin-top: 14px; text-align: right; }
 """
 
 
