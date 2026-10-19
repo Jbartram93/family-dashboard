@@ -215,11 +215,18 @@ def build_next_up():
     dt = event_datetime(e)
     color = person_color(e["person"])
 
-    # Countdown text: minutes for today, otherwise day name/count
+    # Countdown text: hours+minutes for today, otherwise day name/count
     delta = dt - NOW
     if delta.days == 0:
-        mins = int(delta.total_seconds() // 60) + 1
-        countdown = f"IN {mins} MIN" if mins > 1 else "NOW"
+        total_mins = int(delta.total_seconds() // 60) + 1
+        if total_mins <= 1:
+            countdown = "NOW"
+        elif total_mins < 60:
+            countdown = f"IN {total_mins} MIN"
+        else:
+            hrs = total_mins // 60
+            mins = total_mins % 60
+            countdown = f"IN {hrs} HR {mins} MIN" if mins else f"IN {hrs} HR"
     elif delta.days == 1:
         countdown = "TOMORROW"
     elif delta.days < 7:
