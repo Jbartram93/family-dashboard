@@ -75,10 +75,10 @@ COUNTDOWNS = [
 EVENTS = [
     # ---- MONDAY (tomorrow) ----
     {"date": d(1), "time": "12:00 PM", "person": "Darci",  "title": "Art class"},
+    {"date": d(1), "time": "12:30 PM", "person": "Justin", "title": "Bike meet up"},
 
     # ---- TUESDAY ----
     {"date": d(2), "time": "11:00 AM", "person": "Justin", "title": "Talkspace"},
-    {"date": d(2), "time": "12:30 PM", "person": "Justin", "title": "Bike meet up"},
     {"date": d(2), "time": "5:30 PM",  "person": "Darci",  "title": "AHG"},
 
     # ---- WEDNESDAY ----
