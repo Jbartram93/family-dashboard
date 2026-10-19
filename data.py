@@ -73,40 +73,16 @@ COUNTDOWNS = [
 # "person" must match a key in PEOPLE_COLORS.
 # ------------------------------------------------------------------
 EVENTS = [
-    # ---- TODAY ----
-    {"date": d(0), "time": "8:00 AM",  "person": "Justin", "title": "Safety walkthrough — floor 2"},
-    {"date": d(0), "time": "4:30 PM",  "person": "Family", "title": "Pick up car"},
-    {"date": d(0), "time": "5:30 PM",  "person": "Darci",  "title": "Soccer practice"},
-    {"date": d(0), "time": "8:30 PM",  "person": "Jessie", "title": "Book club"},
+    # ---- MONDAY (tomorrow) ----
+    {"date": d(1), "time": "12:00 PM", "person": "Darci",  "title": "Art class"},
 
-    # ---- TOMORROW ----
-    {"date": d(1), "time": "5:00 PM",  "person": "Family", "title": "Burgers at Kiefer's"},
-    {"date": d(1), "time": "7:30 AM",  "person": "Justin", "title": "Tempo run — 5 mi"},
-    {"date": d(1), "time": "12:30 PM", "person": "Mila",   "title": "Pediatrician checkup"},
-    {"date": d(1), "time": "6:30 PM",  "person": "Family", "title": "Game night"},
+    # ---- TUESDAY ----
+    {"date": d(2), "time": "11:00 AM", "person": "Justin", "title": "Talkspace"},
+    {"date": d(2), "time": "12:30 PM", "person": "Justin", "title": "Bike meet up"},
+    {"date": d(2), "time": "5:30 PM",  "person": "Darci",  "title": "AHG"},
 
-    # ---- REST OF THE WEEK ----
-    {"date": d(2), "time": "9:00 AM",  "person": "Jessie", "title": "Mila swim class"},
-    {"date": d(2), "time": "10:00 AM", "person": "Justin", "title": "Go to FLS?"},
-    {"date": d(2), "time": "6:00 PM",  "person": "Justin", "title": "Gym — push day"},
-
-    {"date": d(3), "time": "8:00 AM",  "person": "Justin", "title": "Work — EHS audit prep"},
-    {"date": d(3), "time": "7:00 PM",  "person": "Family", "title": "Small group"},
-
-    {"date": d(4), "time": "10:00 AM", "person": "Jessie", "title": "Grocery run"},
-    {"date": d(4), "time": "12:00 PM", "person": "Darci",  "title": "Art class"},
-    {"date": d(4), "time": "4:30 PM",  "person": "Justin", "title": "Pick up Darci"},
-
-    # ---- WEEKEND ----
-    {"date": d(5), "time": "7:00 AM",  "person": "Justin", "title": "Long run — 10 mi"},
-    {"date": d(5), "time": "9:00 AM",  "person": "Family", "title": "Darci soccer game"},
-    {"date": d(5), "time": "6:00 PM",  "person": "Family", "title": "Movie night"},
-
-    {"date": d(6), "time": "10:00 AM", "person": "Family", "title": "Church"},
-    {"date": d(6), "time": "5:00 PM",  "person": "Family", "title": "Meal prep for the week"},
-
-    # ---- NEXT WEEK ----
-    {"date": d(7), "time": "ALL DAY",  "person": "Family", "title": "Hungryroot"},
+    # ---- WEDNESDAY ----
+    {"date": d(3), "time": "5:45 PM",  "person": "Family", "title": "Church dinner"},
 
     # ---- FIXED DATES (hardcoded ISO dates work too) ----
     {"date": "2026-10-31", "time": "6:00 PM", "person": "Family", "title": "Trunk or treat @ church"},
