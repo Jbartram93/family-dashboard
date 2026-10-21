@@ -297,6 +297,8 @@ def build_todos():
                 f'<div class="todo" data-key="todo/{TODAY.isoformat()}/{person}/{idx}">'
                 f'<span class="circle"></span>{item}</div>'
             )
+        if not rows:
+            rows.append('<div class="pc-empty">Nothing today</div>')
         cols.append(
             f'<div class="pc todo-col"><div class="pc-head" '
             f'style="color:{color}">{person.upper()}</div>{"".join(rows)}</div>'
